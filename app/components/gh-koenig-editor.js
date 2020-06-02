@@ -1,8 +1,12 @@
 import Component from '@ember/component';
+import ghostPaths from 'ghost-admin/utils/ghost-paths';
+import {inject as service} from '@ember/service';
+import {setCardMenu} from 'koenig-editor/options/cards';
 
 export default Component.extend({
 
     // public attrs
+    ajax: service(),
     classNames: ['gh-koenig-editor', 'relative', 'w-100', 'vh-100', 'overflow-x-hidden', 'overflow-y-auto', 'z-0'],
     title: '',
     titlePlaceholder: '',
@@ -21,6 +25,15 @@ export default Component.extend({
     onBodyChange() {},
     onEditorCreated() {},
     onWordCountChange() {},
+
+    async init() {
+        this._super(...arguments);
+        const response = await this.ajax.request(`${ghostPaths().apiRoot}/gamalon`, {
+            processData: false,
+            contentType: false
+        });
+        setCardMenu(response);
+    },
 
     actions: {
         focusTitle() {

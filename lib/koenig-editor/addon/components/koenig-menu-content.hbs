@@ -5,7 +5,13 @@
     {{#each section.items as |item|}}
         {{#if (or (not item.developerExperiment) (and item.developerExperiment config.enableDeveloperExperiments))}}
             <div class="{{if item.selected "kg-cardmenu-card-selected"}} {{kg-style "cardmenu-card"}}" onclick={{action itemClicked item}} data-kg="cardmenu-card" role="menuitem">
-                <div class="{{kg-style "cardmenu-icon"}} {{item.iconClass}}" aria-hidden="true">{{svg-jar item.icon class="w8 h8"}}</div>
+                {{#if (eq section.title 'Gamalon')}}
+                    <div class="w8 h8">
+                        {{{item.icon}}}
+                    </div>
+                {{else}}
+                    <div class="{{kg-style "cardmenu-icon"}} {{item.iconClass}}" aria-hidden="true">{{svg-jar item.icon class="w8 h8"}}</div>
+                {{/if}}
                 <div class="{{kg-style "cardmenu-label"}}">{{item.label}}</div>
             </div>
         {{/if}}
